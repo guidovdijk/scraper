@@ -38,24 +38,18 @@ rp(url)
 
 // Scrape data from sites
 var fn = function getData(obj){
-    return new Promise(resolve => {
-      rp(obj.url)
-      .then(function(html){
-        resolve($(obj.name, html));
-      })
-      .catch(function(err){
-        console.log('error', err);
-      });
+  return rp(obj.url)
+    .then(function(html){
+      return {
+        name: $(obj.name, html).text()
+      };
+    })
+    .catch(function(err){
+      console.log('error', err);
     });
 };
 
-async function logUsers (config)  {
-  await Promise.all(config.map(async c => {
-    const response = await fetch(`${c.url}`);
-    const user = await response.json();
-    console.log('test', user);
-  }));
-}
+
 
 var results = Promise.all(config.map(fn));
 
