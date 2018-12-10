@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>test</title>
+    </head>
+    <body>
+
+        <div id="product_wrapper">
+
+            <% for (let i = 0; i < d.length; i++) { %>
+
+                <% for (let j = 0; j < d.length; j++) { %>
+                
+                    <div class="product">
+
+                        <img src="<%= d[i][j].src.prefix %><%= d[i][j].image %>"/>
+
+                        <h1><%= d[i][j].title %></h1>
+
+                        <a href="<%= d[i][j].link %>" target="_blank">Go to product</a>
+
+                        <p class="price price--old"><%= d[i][j].price.old %></p>
+
+                        <p class="price price--new"><%= d[i][j].price.new %></p>
+
+                    </div>
+
+                <% } %>
+
+            <% } %>
+
+        </div>
+    </body>
+</html>

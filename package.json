@@ -5,16 +5,18 @@
   "main": "index.js",
   "scripts": {
     "start": "./node_modules/nodemon/bin/nodemon.js ./src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "node": "node app.js",
+    "nodemon": "nodemon ./app.js localhost 3000"
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {},
+  "devDependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "nodemon": "^1.18.7",
+    "puppeteer": "^1.11.0"
+  },
   "dependencies": {
-    "browserify": "^16.2.3",
-    "cheerio": "^1.0.0-rc.2",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.2",
-    "watchify": "^3.11.0"
+    "cheerio": "^1.0.0-rc.2"
   }
 }
