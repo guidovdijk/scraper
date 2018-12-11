@@ -14,20 +14,23 @@
 
                 <% for (let j = 0; j < d.length; j++) { %>
                 
-                    <div class="product">
+                    <% if(d[i][j]) { %>
 
-                        <img src="<%= d[i][j].src.prefix %><%= d[i][j].image %>"/>
+                        <div class="product">
 
-                        <h1><%= d[i][j].title %></h1>
+                            <img src="<%= d[i][j].src.prefix %><%= d[i][j].image %>"/>
 
-                        <a href="<%= d[i][j].link %>" target="_blank">Go to product</a>
+                            <h1><%= d[i][j].title %></h1>
 
-                        <p class="price price--old"><%= d[i][j].price.old %></p>
+                            <a href="<%= d[i][j].link %>" target="_blank">Go to product</a>
 
-                        <p class="price price--new"><%= d[i][j].price.new %></p>
+                            <p class="price price--old"><%= d[i][j].price.old %></p>
 
-                    </div>
+                            <p class="price price--new"><%= d[i][j].price.new %></p>
 
+                        </div>
+                        
+                    <% } %>
                 <% } %>
 
             <% } %>

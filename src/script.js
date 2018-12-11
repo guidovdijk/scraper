@@ -24,8 +24,102 @@
   Als je wilt testen met 1 product van elke pagina, haal dan de tweede for loop uit de index.ejs weg en vervand de [j] met [0].
 */
 const puppeteer = require('puppeteer');
-const $ = require('cheerio');
+const cheerio = require('cheerio');
+const jsdom = require("jsdom");
+const rp = require('request-promise');
 
+const { JSDOM } = jsdom;
+
+
+function scrape (obj, link) {
+  
+  const scrape = rp({url: link})
+                  .then((html) => {
+                    //success!
+                    console.log(link)
+                      const $ = cheerio.load(html);
+                      return {
+                          title: $(obj.data.title).text(),
+                          price: {
+                            old: $(obj.data.price.old).text(),
+                            new: $(obj.data.price.new).text(),
+                          },
+                          image: $(obj.data.image).attr('src'),
+                          src: {
+                            link: link,
+                            prefix: obj.data.prefix,
+                          }
+                      };
+                  }).catch((err) => {
+                    //handle error
+                   
+                  });
+  return scrape;
+
+  // JSDOM.fromURL(link).then(dom => {
+  //   return dom.serialize();
+  // }).then(dom => {
+
+  //     const $ = cheerio.load(dom);
+
+  //     const data = {
+  //         title: $(obj.data.title).text(),
+  //         price: {
+  //           old: $(obj.data.price.old).text(),
+  //           new: $(obj.data.price.new).text(),
+  //         },
+  //         image: $(obj.data.image).attr('src'),
+  //         src: {
+  //           link: link,
+  //           prefix: obj.data.prefix,
+  //         }
+  //     };
+  //     console.log(data)
+  //     return data;
+  // });
+
+  // const browser = await puppeteer.launch();
+  // const page = await browser.newPage();
+
+  // await page.setRequestInterception(true);
+    
+  // page.on('request', (req) => {
+  //     if(req.resourceType() == 'stylesheet' || req.resourceType() == 'font'){
+  //         req.abort();
+  //     }
+  //     else {
+  //         req.continue();
+  //     }
+  // });
+
+  // await page.goto(link);
+
+  // let content = await page.content();
+  // var $ = cheerio.load(content);
+
+  // let data = {
+  //     title: $(obj.data.title).text(),
+  //     price: {
+  //       old: $(obj.data.price.old).text(),
+  //       new: $(obj.data.price.new).text(),
+  //     },
+  //     image: $(obj.data.image).attr('src'),
+  //     src: {
+  //       link: link,
+  //       prefix: obj.data.prefix,
+  //     }
+  // };
+
+  // await browser.close();
+
+  // return data
+
+}
+
+module.exports = scrape;
+
+
+/*
 class Scraper {
   scrapeData(obj, link) {
     const request = puppeteer
@@ -57,6 +151,5 @@ class Scraper {
 
     return request;
   }
-}
 
-module.exports = Scraper;
+*/

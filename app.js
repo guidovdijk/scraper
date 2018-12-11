@@ -3,16 +3,20 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(express.static('src'));
 
-const Scraper = require('./src/script');
+const scrape = require('./src/script');
 const dataBundle = require('./src/config.json');
-const scrape = new Scraper();
 const port = 3000;
 
 // process.setMaxListeners(0);
-
 const results = Promise.all(dataBundle.map(d => { 
-    return Promise.all(d.url.map(url => { return scrape.scrapeData(d, url); }));
+    return Promise.all(d.url.map(url => { 
+        return scrape(d, url); 
+    }));
 }));
+
+results.then((data) => {
+    console.log('test', data[0][0].src)
+});
 
 app.get('/', (req, res) => {
     
