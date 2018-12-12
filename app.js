@@ -8,15 +8,15 @@ const dataBundle = require('./src/config.json');
 const port = 3000;
 
 // process.setMaxListeners(0);
-const results = Promise.all(dataBundle.map(d => { 
-    return Promise.all(d.url.map(url => { 
-        return scrape(d, url); 
-    }));
-}));
-
-results.then((data) => {
-    console.log('test', data[0][0].src)
-});
+// const results = Promise.all(dataBundle.map(d => { 
+//     return Promise.all(d.url.map(url => { 
+//         return scrape(d, url); 
+//     }));
+// }));
+console.log(scrape());
+// results.then((data) => {
+//     console.log('test', data)
+// });
 
 app.get('/', (req, res) => {
     
@@ -32,3 +32,7 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
+
+
+// https://gist.github.com/bschwartz757/5d1ff425767fdc6baedb4e5d5a5135c8
