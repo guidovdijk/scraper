@@ -25,6 +25,7 @@
 
   https://gist.github.com/bschwartz757/5d1ff425767fdc6baedb4e5d5a5135c8
 */
+const axios = require('axios');
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio');
 const jsdom = require("jsdom");
@@ -35,42 +36,56 @@ const dataBundle = require('./config.json');
 const { JSDOM } = jsdom;
 
 
-const requestAsync = function(data, url) {
-    return new Promise((resolve, reject) => {
-      console.log(url)
-        const asyncdata = url.map(u => {
-          rp({url: u}).then((html) => {
-              const $ = cheerio.load(html);
-              resolve({
-                  title: $(data.title).text(),
-                  price: {
-                    old: $(data.price.old).text(),
-                    new: $(data.price.new).text(),
-                  },
-                  image: $(data.image).attr('src'),
-                  src: {
-                    link: u,
-                    prefix: data.prefix,
-                  }
-              });
-          }).catch((err) => {
+// const requestAsync = function(data, url) {
+//     return new Promise((resolve, reject) => {
+//       console.log(url)
+//         const asyncdata = url.map(u => {
+//           rp({url: u}).then((html) => {
+//               const $ = cheerio.load(html);
+//               resolve({
+//                   title: $(data.title).text(),
+//                   price: {
+//                     old: $(data.price.old).text(),
+//                     new: $(data.price.new).text(),
+//                   },
+//                   image: $(data.image).attr('src'),
+//                   src: {
+//                     link: u,
+//                     prefix: data.prefix,
+//                   }
+//               });
+//           }).catch((err) => {
 
-          });
-        })
+//           });
+//         })
        
-    });
-};
+//     });
+// };
 
 
-const scrape = async function (obj, link) {
-  
-  try {
-    var data = await Promise.all(dataBundle.map(requestAsync))
-  } catch (err){
-    console.log(err);
+class Scrape {
+
+  async getScrape (url) {
+    
+    try {
+      const res = await axios.get(`https://jsonplaceholder.typicode.com/posts/1`);
+      const data = res.data;
+      console.log(data);
+      // var data = await Promise.all(dataBundle.map(requestAsync))
+    } catch (err){
+      console.log(err);
+    }
+   
   }
-  console.log('data',data)
-  // return rp({url: link})
+} 
+
+
+
+
+module.exports = scrape;
+
+
+ // return rp({url: link})
   //       .then((html) => {
   //         //success!
   //           const $ = cheerio.load(html);
@@ -148,12 +163,6 @@ const scrape = async function (obj, link) {
   // await browser.close();
 
   // return data
-
-}
-
-module.exports = scrape;
-
-
 /*
 class Scraper {
   scrapeData(obj, link) {

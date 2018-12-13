@@ -13,20 +13,20 @@ const port = 3000;
 //         return scrape(d, url); 
 //     }));
 // }));
-console.log(scrape());
+scrape('src/config.json');
 // results.then((data) => {
 //     console.log('test', data)
 // });
 
 app.get('/', (req, res) => {
     
-    results.then((d) => {
+    // results.then((d) => {
 
-        res.render('index.ejs', { d: d });
+    //     res.render('index.ejs', { d: d });
         
-    }).catch(function(err){
-        console.log('error', err);
-    });
+    // }).catch(function(err){
+    //     console.log('error', err);
+    // });
     
     // res.sendFile(path.join(__dirname + '/index.html')); 
 });
